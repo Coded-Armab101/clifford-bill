@@ -1,0 +1,1822 @@
+/* ------------------------------------------------------------------
+   Sections
+   ------------------------------------------------------------------ */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* no header spacer: the hero is flush to the top of the document and its own
+   padding-top clears the fixed bar */
+
+.section {
+  position: relative;
+}
+
+.font-inter {
+  font-family: var(--font-alt);
+}
+
+/* ==================================================================
+   Intro
+   ------------------------------------------------------------------
+   A 100vh flex column: the image is taken out of flow and pinned
+   behind everything, the headline sits at the top and the
+   description / film / status bar sit at the bottom. The headline
+   grid item spans the first five of the eight columns, and the
+   bottom row leaves columns three to six deliberately empty.
+   ================================================================== */
+.intro-wrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+  position: relative;
+  height: 100vh;
+  padding-top: var(--sp-128);
+}
+
+.intro-wrap_img-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  height: 100%;
+  margin-right: calc(var(--gutter) * -1);
+  margin-left: calc(var(--gutter) * -1);
+}
+
+/* 115% and bottom-anchored so the crop stays tight as the window
+   changes shape; the overflow crops off the top, under the headline */
+.img.intro {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 115%;
+  object-fit: cover;
+  object-position: 50% 100%;
+}
+
+.intro-wrap_title {
+  position: relative;
+  grid-column: span 5 / span 5;
+}
+
+/* The horse mark sits over the type. The source anchors it with
+   `bottom`/`right` against a zero-width inline box parked after the
+   headline, which ties its position to how wide the headline renders.
+   Because the display face is substituted, these offsets come from the
+   reference's measured geometry instead — the mark then lands in the
+   same place at any viewport width. */
+.horse {
+  display: block;
+  width: 17.5vw;
+  height: 13.33vw;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+}
+
+.horse.intro {
+  top: 1.13vw;
+  left: 16.38vw;
+}
+
+.intro-wrap_content {
+  position: relative;
+}
+
+/* hero summary — sits at the bottom of its column */
+.intro-wrap_content_desc-2 {
+  grid-area: 1 / 1 / 2 / 3;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* info strip summary (mobile only) — the reference gives these two classes
+   the same column flex but the opposite alignment */
+.intro-wrap_content_desc,
+.intro-wrap_content_widgets {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+}
+
+.intro-wrap_content_widgets {
+  grid-area: 1 / 7 / 2 / 9;
+}
+
+@media (max-width: 767px) {
+  .intro-wrap_title {
+    grid-column: span 2 / span 2;
+  }
+  .horse {
+    width: 32vw;
+    height: 24.3vw;
+  }
+  .horse.intro {
+    top: 3.85vw;
+    left: 31.79vw;
+  }
+  /* both mobile summaries are full-bleed across the 2-column mobile grid */
+  .intro-wrap_content_desc-2,
+  .intro-wrap_content_desc,
+  .intro-wrap_content_widgets {
+    grid-area: auto;
+    grid-column: 1 / span 2;
+  }
+}
+
+/* --- video card --- */
+.video-card {
+  position: relative;
+  cursor: pointer;
+}
+
+.video-wrap_wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+}
+
+.video {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-wrap_label {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: calc(var(--sp-8) / 2) var(--sp-16);
+}
+
+.video-pop-up {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--base-0--100);
+}
+
+.video-2 {
+  width: 100%;
+  height: 100%;
+}
+
+.embedly-embed {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.video-pop-up_btn-close {
+  position: absolute;
+  top: var(--gutter);
+  right: var(--gutter);
+  z-index: 1;
+}
+
+@media (max-width: 767px) {
+  .video-wrap_label {
+    padding: var(--sp-8) var(--sp-8) calc(var(--sp-8) / 2) var(--sp-32);
+  }
+}
+
+/* ==================================================================
+   Info strip
+   ------------------------------------------------------------------
+   Ported coefficients are the original em values verbatim; they resolve
+   against body { font-size: 1vw }, so 5.56em is 5.56vw at every width.
+   ================================================================== */
+.info-wrap {
+  position: relative;
+}
+
+.intro-wrap_loc,
+.intro-wrap_dev {
+  height: 5.56em;
+  padding-top: 1.67em;
+  padding-bottom: 1.67em;
+}
+
+.intro-wrap_loc {
+  grid-column: 1 / span 2;
+  grid-row: 1;
+}
+
+.intro-wrap_partners {
+  grid-column: 3 / span 4;
+  grid-row: 1;
+  /* the logos invert against whatever sits behind them */
+  mix-blend-mode: difference;
+  height: 5.56em;
+  padding: 0.56em 5.97em;
+}
+
+.intro-wrap_dev {
+  grid-column: 7 / span 2;
+  grid-row: 1;
+}
+
+/* absolute hairline, so it needs no grid cell of its own */
+.intro-wrap_line {
+  position: absolute;
+  top: 5.56em;
+  left: 0;
+  right: 0;
+  width: auto;
+  margin-left: -2.22em;
+  margin-right: -2.22em;
+}
+
+/* --- partner marquee --- */
+.partners-ticker {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* the reference fades the ends with a real PNG mask, not a gradient */
+.partners-ticker.mask-fade {
+  -webkit-mask-image: var(--mask-logo);
+  mask-image: var(--mask-logo);
+  -webkit-mask-size: cover;
+  mask-size: cover;
+}
+
+.partners-ticker_list {
+  position: absolute;
+  display: flex;
+  flex: none;
+  width: auto;
+  height: 4.44em;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee 16s linear infinite reverse;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(-50%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+/* fixed copy width is what makes the -50% keyframe land on the seam */
+.partners-cms {
+  flex: none;
+  width: 67.9em;
+  height: 100%;
+}
+
+.partners-cms_list {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100%;
+  gap: 0.56em;
+  padding-right: 0.56em;
+}
+
+.partners-cms_list_item {
+  height: 100%;
+}
+
+.partners-card {
+  width: auto;
+  height: 100%;
+  opacity: 0.6;
+}
+
+.partners-logo {
+  display: inline-block;
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .partners-ticker_list {
+    animation: none;
+  }
+}
+
+@media (max-width: 767px) {
+  /* two columns, but the reference stacks Location, Development and then
+     the marquee — so rows are assigned explicitly rather than auto-flowed */
+  .intro-wrap_loc,
+  .intro-wrap_dev {
+    grid-column: 1 / span 2;
+    height: auto;
+  }
+
+  .intro-wrap_loc {
+    grid-row: 1;
+    margin-top: 3.74em;
+    margin-bottom: 3.74em;
+  }
+
+  .intro-wrap_dev {
+    grid-row: 2;
+  }
+
+  .intro-wrap_loc,
+  .intro-wrap_dev {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  /* bleeds to both page edges and sits well below the two labels */
+  .intro-wrap_partners {
+    grid-column: 1 / span 2;
+    grid-row: 3;
+    height: 14.95em;
+    margin-top: 11.21em;
+    margin-left: -3.79em;
+    margin-right: -3.79em;
+    padding: 0;
+  }
+
+  .partners-ticker_list.masked {
+    height: 14.95em;
+  }
+
+  .partners-cms {
+    width: 228.972em;
+  }
+
+  .partners-cms_list {
+    gap: 1.87em;
+    padding-right: 1.87em;
+  }
+
+  /* the strip becomes a single column holding the marquee grid and then the
+     summary/film pair the hero gave up, stacked as flex items */
+  .intro-wrap_content {
+    display: flex;
+    flex-flow: column;
+  }
+
+  .intro-wrap_content_desc {
+    margin-bottom: 7.48em;
+  }
+
+  .intro-wrap_content_widgets {
+    margin-bottom: 3.74em;
+  }
+
+  .grid.pt-32.mob_first {
+    order: -1;
+  }
+}
+
+/* ==================================================================
+   About slider
+   ================================================================== */
+.sticky-wrap-outer {
+  position: static;
+  height: 450vh;
+}
+
+.sticky-wrap-inner-1 {
+  position: sticky;
+  top: 0;
+}
+
+.section.sticky,
+.section.clip.sticky {
+  height: 100vh;
+}
+
+.sticky-wrap-inner {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  margin-top: 250vh;
+}
+
+.section.clip.sticky > .container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.about-wrap {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  padding-top: var(--sp-32);
+}
+
+.about-slider {
+  position: relative;
+  flex: 1 1 auto;
+  padding-bottom: var(--sp-32);
+}
+
+/* nowrap mask: five full-width slides sit on one line and the track slides */
+.about-slider_mask {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.about-slider_track {
+  display: flex;
+  height: 100%;
+  transform: translateX(calc(var(--slide-index, 0) * -100%));
+  transition: transform 1.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.about-slide {
+  position: relative;
+  flex: 0 0 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  white-space: normal;
+}
+
+.about-slide_headline {
+  grid-column: 2 / span 6;
+}
+
+.about-slide_desc {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.about-slide_desc_inner {
+  grid-column: 3 / span 4;
+}
+
+/* per-character headline reveal */
+.anim-char {
+  display: inline-block;
+  color: var(--base-1000--15);
+  transition: color var(--dur) var(--ease-house);
+  transition-delay: calc(var(--i, 0) * 18ms);
+}
+
+.anim-text[data-active] .anim-char,
+.anim-char[data-on] {
+  color: var(--base-1000--100);
+}
+
+.anim-char[data-on] {
+  transition-delay: calc(var(--i, 0) * 18ms);
+}
+
+/* stagger: set --i on each char via nth-child up to a sane bound */
+.anim-text > .anim-char:nth-child(1) { --i: 0; }
+.anim-text > .anim-char:nth-child(2) { --i: 1; }
+.anim-text > .anim-char:nth-child(3) { --i: 2; }
+.anim-text > .anim-char:nth-child(4) { --i: 3; }
+.anim-text > .anim-char:nth-child(5) { --i: 4; }
+.anim-text > .anim-char:nth-child(6) { --i: 5; }
+.anim-text > .anim-char:nth-child(7) { --i: 6; }
+.anim-text > .anim-char:nth-child(8) { --i: 7; }
+.anim-text > .anim-char:nth-child(9) { --i: 8; }
+.anim-text > .anim-char:nth-child(10) { --i: 9; }
+.anim-text > .anim-char:nth-child(11) { --i: 10; }
+.anim-text > .anim-char:nth-child(12) { --i: 11; }
+.anim-text > .anim-char:nth-child(13) { --i: 12; }
+.anim-text > .anim-char:nth-child(14) { --i: 13; }
+.anim-text > .anim-char:nth-child(15) { --i: 14; }
+.anim-text > .anim-char:nth-child(16) { --i: 15; }
+.anim-text > .anim-char:nth-child(17) { --i: 16; }
+.anim-text > .anim-char:nth-child(18) { --i: 17; }
+.anim-text > .anim-char:nth-child(19) { --i: 18; }
+.anim-text > .anim-char:nth-child(20) { --i: 19; }
+.anim-text > .anim-char:nth-child(n + 21) { --i: 20; }
+
+.about-slider_nav {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 2;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--sp-16);
+  height: var(--sp-32);
+}
+
+.about-slider_dot {
+  flex: 1 1 0;
+  height: 6px;
+  padding: 0;
+  background-color: var(--base-1000--10);
+  border: 0;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color var(--dur) var(--ease-tab);
+}
+
+.about-slider_dot[data-active] {
+  background-color: var(--base-1000--100);
+}
+
+@media (max-width: 767px) {
+  .sticky-wrap-outer {
+    height: auto;
+  }
+  .section.clip.sticky,
+  .sticky-wrap-inner-1,
+  .sticky-wrap-inner {
+    position: static;
+    height: auto;
+    margin-top: 0;
+  }
+  .about-wrap {
+    height: auto;
+    padding-top: 0;
+  }
+  .about-slider {
+    height: auto;
+    padding-bottom: 0;
+  }
+  .about-slider_mask {
+    height: auto;
+    overflow: visible;
+    white-space: normal;
+  }
+  .about-slider_track {
+    flex-direction: column;
+    gap: var(--sp-64);
+    height: auto;
+    transform: none;
+    transition: none;
+  }
+  .about-slide {
+    flex: 0 0 auto;
+  }
+  .about-slide_headline,
+  .about-slide_desc_inner {
+    grid-column: 1 / span 2;
+  }
+  .about-slide_desc {
+    position: static;
+  }
+  .anim-char {
+    color: var(--base-1000--100);
+  }
+  .about-slider_nav {
+    display: none;
+  }
+}
+
+/* ==================================================================
+   Areas
+   ================================================================== */
+.areas-wrap {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  margin-inline: auto;
+}
+
+.areas-wrap_img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.render-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 100%;
+}
+
+/* The reference seats the caption block against the top of the panel and
+   darkens it with a top scrim; it spans the full panel width and rides the
+   same width animation as the render. */
+.areas-wrap_img-wrap .grad-overlay-t {
+  height: 23.33vw;
+  background-image: linear-gradient(var(--scrim-60), transparent);
+}
+
+.areas-wrap_tabs {
+  position: absolute;
+  top: 2.22vw;
+  right: 0;
+  left: 0;
+  z-index: 2;
+}
+
+.areas-wrap_tabs_title {
+  padding-right: var(--gutter);
+  padding-left: var(--gutter);
+}
+
+.area-tabs-cms_list {
+  position: relative;
+  z-index: 1;
+}
+
+.area-tabs-cms_list_item:first-child {
+  border-top: 1px solid var(--base-0--20);
+}
+
+.area-tab {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 2.22vw;
+  padding: 0.56vw var(--gutter);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--base-0--20);
+  color: var(--base-0--50);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.8s var(--ease-tab);
+}
+
+.area-tab[data-active] {
+  border-bottom-color: var(--white);
+  color: var(--white);
+}
+
+.area-tab_name {
+  grid-column: span 4;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  transition: all 0.8s var(--ease-tab);
+}
+
+.area-tab[data-active] .area-tab_name {
+  padding-left: 1.11vw;
+}
+
+.area-tab_area {
+  grid-column: span 4;
+  display: flex;
+  column-gap: 0.28vw;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.area-tab_ico-dot {
+  position: absolute;
+  left: 0;
+  width: 0.56vw;
+  height: 0.56vw;
+  margin-bottom: 2px;
+  background-color: var(--white);
+  border-radius: 50%;
+  transform: scale(0);
+  transition: all 0.8s var(--ease-tab);
+}
+
+.area-tab[data-active] .area-tab_ico-dot {
+  transform: scale(1);
+}
+
+@media (max-width: 767px) {
+  .areas-wrap {
+    height: auto;
+  }
+  .areas-wrap_img-wrap {
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+  .areas-wrap_tabs {
+    position: static;
+    margin-top: var(--sp-32);
+  }
+  .areas-wrap_tabs_title {
+    padding-right: 0;
+    padding-left: 0;
+  }
+  .area-tab {
+    height: auto;
+    padding: var(--sp-24) 0;
+  }
+  .area-tab_name,
+  .area-tab_area {
+    grid-column: 1 / -1;
+  }
+  .area-tab[data-active] .area-tab_name {
+    padding-left: 1.56vw;
+  }
+  .area-tab_ico-dot {
+    width: var(--sp-8);
+    height: var(--sp-8);
+  }
+}
+
+/* ==================================================================
+   Description
+   ================================================================== */
+.description-wrap_colum-1 {
+  grid-column: 5 / 7;
+}
+
+.description-wrap_colum-2 {
+  grid-column: 7 / 9;
+}
+
+.description-wrap_colum-1,
+.description-wrap_colum-2 {
+  padding-right: var(--gutter);
+}
+
+@media (max-width: 767px) {
+  .description-wrap_colum-1,
+  .description-wrap_colum-2 {
+    grid-column: 1 / 3;
+    padding-right: 0;
+  }
+
+  .description-wrap_colum-2 {
+    grid-row-start: 2;
+  }
+}
+
+/* ==================================================================
+   Metrics
+   ================================================================== */
+.metrics-wrap {
+  position: relative;
+}
+
+.metrics_line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: auto;
+  /* the rule runs the full width of the viewport, not the container */
+  margin-right: calc(var(--gutter) * -1);
+  margin-left: calc(var(--gutter) * -1);
+}
+
+.metrics-wrap_item {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 20vw;
+  padding: var(--sp-24);
+  border-left: 1px solid var(--base-1000--10);
+}
+
+.metrics-wrap_item.last {
+  border-right: 1px solid var(--base-1000--10);
+}
+
+.metrics-wrap_item_title {
+  width: 15.56vw;
+}
+
+@media (max-width: 767px) {
+  .metrics-wrap {
+    margin-left: calc(var(--gutter) * -1);
+    margin-right: calc(var(--gutter) * -1);
+  }
+  .metrics_line {
+    /* .metrics-wrap already bleeds past the container here */
+    margin: 0;
+  }
+  .metrics-wrap_item {
+    grid-column: 1 / -1;
+    height: auto;
+    padding: var(--sp-32);
+    border-right: 1px solid var(--base-1000--10);
+    border-bottom: 1px solid var(--base-1000--10);
+  }
+  .metrics-wrap_item.is-2 {
+    border-right: 1px solid var(--base-1000--10);
+  }
+  .metrics-wrap_item.last {
+    border-right: 1px solid var(--base-1000--10);
+  }
+  .metrics-wrap_item_title {
+    width: auto;
+    margin-bottom: var(--sp-16);
+  }
+  .metrics-wrap .grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==================================================================
+   Masterplan
+   ================================================================== */
+.genplan-wrap {
+  position: relative;
+  height: 400vh;
+  margin-left: calc(var(--gutter) * -1);
+  margin-right: calc(var(--gutter) * -1);
+}
+
+.genplan-wrap_visual {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.genplan-wrap_img-wrap {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.img-genplan {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.genplan-wrap_img-wrap_overlay-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.genplan-wrap_img-wrap_overlay {
+  position: absolute;
+  inset: 0;
+  background-color: var(--scrim-20);
+}
+
+.genplan-wrap_interaction {
+  position: sticky;
+  top: 0;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  /* the overlay shares the map's sticky viewport instead of queueing up
+     one screen below it */
+  margin-top: -100vh;
+}
+
+.genplan-pins-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+}
+
+.genplan-wrap_pins {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.genplan-wrap_border {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+}
+
+.img-genplan-border {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.area-pin {
+  position: absolute;
+  inset: 45% 50% 55%;
+  display: flex;
+  flex-flow: row;
+  justify-content: center;
+  align-items: center;
+  width: 1.11vw;
+  height: 1.11vw;
+  background-color: var(--white);
+}
+
+.area-pin_label {
+  position: absolute;
+  inset: auto auto 100%;
+  flex: none;
+  padding: 0.56vw 0.83vw;
+  background-color: var(--white);
+}
+
+.genplan-wrap_interaction_title {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-16);
+  margin: 0 var(--gutter);
+  pointer-events: none;
+}
+
+.genplan-wrap_interaction_footer {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: 0 var(--gutter);
+  /* .mb-32 lifts the row off the panel edge */
+  margin-bottom: 2.22vw;
+  z-index: 5;
+}
+
+.genplan-wrap_interaction_loc {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  grid-column: 1 / span 2;
+}
+
+.genplan-wrap_interaction_desc {
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-end;
+  align-items: center;
+  grid-column: 4 / span 2;
+  text-align: center;
+}
+
+.genplan-wrap_interaction_btns {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-end;
+  justify-content: flex-end;
+  grid-column: 7 / span 2;
+  gap: var(--sp-8);
+}
+
+/* --- pins --- */
+/* Each label SVG is authored at full panel size and draws its own label in
+   place, so the layer has to cover the panel exactly like the reference. */
+.pin-visual {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-fast) var(--ease-house);
+}
+
+.pin-visual[data-show] {
+  opacity: 1;
+}
+
+.pin {
+  position: absolute;
+  z-index: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--sp-32);
+  height: var(--sp-32);
+  padding: calc(var(--sp-8) / 2);
+  background-color: var(--base-1000--100);
+  border: 0;
+  cursor: pointer;
+  transition: all var(--dur) var(--ease-house);
+  /* the reference seats every pin 2em below the percentage it declares */
+  margin-top: 2vw;
+}
+
+.pin:hover,
+.pin:focus-visible {
+  z-index: 10;
+}
+
+.pin.prim-on-white {
+  background-color: var(--brand-500--100);
+  color: var(--base-0--100);
+}
+
+.pin.is-01 { top: 45%; left: 64%; }
+.pin.is-02 { top: 65%; left: 65%; }
+.pin.is-03 { top: 68%; left: 41%; }
+.pin.is-04 { top: 53%; left: 82%; z-index: 2; }
+.pin.is-05 { top: 52%; left: 21%; z-index: 8; }
+.pin.is-06 { top: 69%; left: 80%; z-index: 2; }
+.pin.is-07 { top: 69%; left: 20%; }
+
+.pin-details {
+  position: absolute;
+  top: 0;
+  z-index: 3;
+  width: 17.78vw;
+  padding: 0;
+  background-color: var(--base-0--100);
+  color: var(--base-1000--100);
+  text-align: left;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(var(--sp-32)) scale(0);
+  transition: all var(--dur-fast) var(--ease-pop);
+}
+
+.pin-details.right {
+  left: 100%;
+  margin-left: var(--sp-8);
+  transform-origin: 0 0;
+}
+
+.pin-details.left {
+  right: 100%;
+  margin-right: var(--sp-8);
+  transform-origin: 100% 0;
+}
+
+.pin-details[data-show] {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.pin-details_title {
+  display: block;
+  padding: var(--sp-8) var(--sp-16);
+  border-bottom: 1px solid var(--base-1000--10);
+}
+
+.pin-details_desc {
+  display: block;
+  padding: var(--sp-16);
+  border-bottom: 1px solid var(--base-1000--10);
+}
+
+.pin-details_desc .p1 {
+  display: block;
+}
+
+/* --- mobile pin list --- */
+.pin-item {
+  grid-column: 1 / span 2;
+  padding: var(--sp-24) 0;
+  border-bottom: 1px solid var(--base-1000--10);
+}
+
+@media (max-width: 767px) {
+  .genplan-wrap {
+    height: auto;
+    margin: 0 calc(var(--gutter) * -1);
+  }
+  .genplan-wrap_visual,
+  .genplan-wrap_interaction {
+    position: static;
+    height: auto;
+    margin-top: 0;
+  }
+  .genplan-wrap_visual,
+  .genplan-pins-wrap {
+    aspect-ratio: 16 / 9;
+    height: 100%;
+  }
+  /* the pin layer is decorative here — MasterplanList carries the same
+     content on touch — so drop it rather than let it overflow */
+  .genplan-pins-wrap {
+    display: none;
+  }
+  .genplan-wrap_img-wrap {
+    aspect-ratio: 16 / 9;
+  }
+  .genplan-wrap_interaction_title {
+    z-index: 5;
+    flex-direction: column;
+    gap: 0;
+    margin: 0 var(--gutter);
+  }
+  .genplan-wrap_interaction_footer {
+    position: static;
+    margin-top: var(--sp-32);
+  }
+  .genplan-wrap_interaction_loc,
+  .genplan-wrap_interaction_desc,
+  .genplan-wrap_interaction_btns {
+    grid-column: 1 / span 2;
+  }
+  .genplan-wrap_interaction_btns {
+    justify-content: flex-start;
+  }
+}
+
+/* ==================================================================
+   Infrastructure
+   ================================================================== */
+.infra-wrap {
+  width: 100%;
+  height: 300vh;
+}
+
+.infra-cms {
+  position: sticky;
+  top: 0;
+  display: flex;
+  height: 100vh;
+  margin-left: calc(var(--gutter) * -1);
+  margin-right: calc(var(--gutter) * -1);
+  overflow: hidden;
+}
+
+.infra-cms_list {
+  display: flex;
+  flex: none;
+  gap: var(--sp-16);
+  padding: var(--sp-96) 0 var(--sp-96) 100vw;
+}
+
+.infra-card {
+  position: relative;
+  z-index: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  width: 34.72vw;
+  height: 100%;
+  padding: var(--sp-24);
+  cursor: pointer;
+}
+
+.infra-card_img-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.img2 {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.infra-card_grad-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: 23.33vw;
+  background-image: linear-gradient(var(--scrim-40), transparent);
+}
+
+.infra-card_title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin-top: var(--sp-24);
+  margin-left: var(--sp-24);
+}
+
+/* the card reads as image + title until it is hovered, focused or opened;
+   the reference keeps this panel collapsed (measured height 0) at rest */
+.infra-card_desc {
+  position: relative;
+  z-index: 1;
+  width: 23.89vw;
+  height: 0;
+  overflow: hidden;
+  background-color: var(--base-0--100);
+}
+
+.infra-card:hover .infra-card_desc,
+.infra-card:focus-within .infra-card_desc,
+.infra-card[data-open] .infra-card_desc {
+  height: 100%;
+}
+
+.infra-card_desc_content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  height: 100%;
+  padding: var(--sp-16);
+}
+
+@media (max-width: 767px) {
+  .infra-wrap {
+    height: auto;
+  }
+  .infra-cms {
+    position: static;
+    height: auto;
+    margin: 0;
+  }
+  .infra-cms_list {
+    flex: 1;
+    flex-direction: column;
+    gap: var(--sp-16);
+    padding: var(--sp-32) 0 0;
+  }
+  .infra-card {
+    width: 100%;
+    height: auto;
+    padding: var(--sp-32);
+  }
+  .infra-card_grad-overlay {
+    height: 67.29vw;
+  }
+  .infra-card_title {
+    margin-top: var(--sp-32);
+    margin-left: var(--sp-32);
+  }
+  .infra-card_desc {
+    width: 100%;
+    height: auto;
+  }
+  .infra-card_desc_content {
+    padding: var(--sp-32);
+  }
+}
+
+/* ==================================================================
+   Benefits
+   ================================================================== */
+/* The seven cards are stacked in a fixed-height box; only the active one
+   is visible, so the whole rail cross-fades in place. The tab list is
+   absolutely positioned over the copy column, bleeding past the gutter. */
+.benefits-wrap_title {
+  grid-column: span 6;
+  position: relative;
+  z-index: 1;
+}
+
+.benefits-wrap_content {
+  position: relative;
+  margin-top: calc(var(--sp-48) * -1);
+}
+
+.benefits-cms_list {
+  position: relative;
+  height: 46.67vw;
+}
+
+.benefits-cms_list_item {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.8s var(--ease-house);
+}
+
+.benefits-cms_list_item[data-active] {
+  z-index: 55;
+  opacity: 1;
+}
+
+.benefits-card_content {
+  grid-column: span 2;
+  align-self: end;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-start;
+  padding-right: var(--gutter);
+}
+
+.benefits-card_img-wrapper {
+  grid-column: span 6;
+  overflow: hidden;
+}
+
+.benefits-card_img-wrap {
+  height: 46.67vw;
+  overflow: hidden;
+  transform: scale(1.12);
+  transition: transform 0.8s var(--ease-tab);
+}
+
+.benefits-card_img-wrap[data-active] {
+  transform: scale(1);
+}
+
+.benefits-card_img-wrap .img {
+  width: 100%;
+  height: 125%;
+}
+
+.benefit-tabs-cms_list {
+  position: absolute;
+  top: 5.56vw;
+  left: calc(var(--gutter) * -1);
+  z-index: 60;
+  width: 26.11vw;
+}
+
+.benefit-tabs-cms_list_item:first-child {
+  border-top: 1px solid var(--base-1000--10);
+}
+
+.benefit-tab {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  position: relative;
+  width: 100%;
+  height: var(--sp-32);
+  padding: var(--sp-8) var(--gutter);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--base-1000--10);
+  color: var(--base-1000--40);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.8s var(--ease-tab);
+}
+
+.benefit-tab[data-active] {
+  padding-left: var(--sp-48);
+  color: var(--base-1000--100);
+  border-bottom-color: var(--base-1000--40);
+}
+
+.benefit-tab_ico-dot {
+  position: absolute;
+  left: var(--gutter);
+  width: var(--sp-8);
+  height: var(--sp-8);
+  margin-bottom: 2px;
+  background-color: var(--base-1000--100);
+  border-radius: 50%;
+  transform: scale(0);
+  transition: transform 0.8s var(--ease-tab);
+}
+
+.benefit-tab[data-active] .benefit-tab_ico-dot {
+  transform: scale(1);
+}
+
+@media (max-width: 767px) {
+  .benefits-wrap_title {
+    grid-column: 1 / span 2;
+    margin-bottom: var(--sp-96);
+  }
+  .benefits-wrap_content {
+    margin-top: 0;
+  }
+  .benefits-cms_list {
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .benefits-cms_list_item {
+    position: static;
+    opacity: 1;
+    transition: none;
+  }
+  .benefits-card {
+    padding: var(--sp-48) 0;
+    border-top: 1px solid var(--base-1000--10);
+  }
+  .benefits-card_content {
+    grid-column: 1 / span 2;
+    padding-right: 0;
+  }
+  .benefits-card_img-wrapper {
+    display: none;
+  }
+  .benefit-tabs-cms_list {
+    display: none;
+  }
+}
+
+/* ==================================================================
+   Register interest
+   ================================================================== */
+.cta-wrap_title {
+  grid-column: 2 / span 6;
+}
+
+/* Each row is a hairline + an eight-column strip: number (2), label (2),
+   control (4). The row pitch comes from the control's own negative
+   bottom margin, exactly as the reference sets it. */
+.form_item {
+  position: relative;
+  padding: 0.56vw 0;
+}
+
+.form_item_line {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+}
+
+.input-num,
+.input-label {
+  padding-top: 0.56vw;
+}
+
+.input-num {
+  grid-column: span 2;
+}
+
+.input-label {
+  grid-column: span 2;
+}
+
+.input-wrap {
+  position: relative;
+  display: flex;
+  grid-column: span 4;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+/* Display type set into the rule itself rather than sitting in a label
+   above the field. */
+.input {
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  height: 4.58vw;
+  margin-bottom: -1.11vw;
+  padding: 0 0 6px;
+  color: var(--base-1000--100);
+  letter-spacing: -0.072em;
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  font-size: 3.5vw;
+  font-weight: 700;
+  line-height: 88%;
+  resize: none;
+}
+
+.input::placeholder {
+  color: var(--base-1000--15);
+}
+
+.input:focus-visible {
+  outline: 1px solid var(--base-1000--40);
+  outline-offset: 3px;
+}
+
+.input-area {
+  height: auto;
+  min-height: 10.5vw;
+  margin-bottom: 0;
+  padding: 0.56vw 0 0;
+}
+
+/* --- custom select --- */
+.select-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.select-label {
+  width: 100%;
+  height: auto;
+  margin-top: 0.28vw;
+  margin-bottom: -0.83vw;
+  padding: 0 0 6px;
+  color: var(--base-1000--100);
+  letter-spacing: -0.072em;
+  background-color: transparent;
+  border: 0;
+  border-radius: 1px;
+  cursor: pointer;
+  font-size: 3.5vw;
+  font-weight: 700;
+  line-height: 88%;
+  user-select: none;
+}
+
+.select-label[data-placeholder] {
+  color: var(--base-1000--15);
+}
+
+.select-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 20;
+  width: 100%;
+  max-height: 40vh;
+  overflow-y: auto;
+  background-color: var(--base-0--100);
+  box-shadow: 0 2px 5px #0003;
+}
+
+.select-dropdown-item {
+  padding: var(--sp-8) var(--sp-16);
+  background-color: var(--base-1000--10);
+  border-top: 1px solid var(--base-1000--15);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-house);
+}
+
+.select-dropdown-item:first-child {
+  border-top: 0;
+}
+
+.select-dropdown-item:hover,
+.select-dropdown-item:focus {
+  background-color: var(--base-1000--15);
+}
+
+.select-dropdown-item[aria-selected='true'] {
+  color: var(--base-1000--100);
+}
+
+.cta-wrap_form {
+  margin-bottom: var(--sp-16);
+}
+
+/* The reference seats the submit row behind a reCAPTCHA badge; this form has
+   none, so the same slot is kept as space to land the row in place. */
+.submit-row {
+  margin-top: 0;
+}
+
+.form_re-captcha {
+  grid-column: 5 / span 4;
+  height: 5.97vw; /* the badge block the reference reserves */
+  margin-top: var(--sp-32);
+  margin-bottom: var(--sp-32);
+}
+
+.btn-submit-wrap {
+  display: flex;
+  grid-column: 5 / span 4;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: 2.22vw;
+}
+
+.submit-btn {
+  position: relative;
+  z-index: 0;
+  height: 2.22vw;
+  padding: 0.56vw 0.83vw;
+  overflow: hidden;
+  border: 0;
+  cursor: pointer;
+  transition: all 0.5s var(--ease-house);
+}
+
+.submit-btn:hover {
+  padding-right: 1.11vw;
+  padding-left: 1.11vw;
+}
+
+.btn-submit-wrap_legal-wrap {
+  width: 21.67vw;
+}
+
+.form_success,
+.form_error {
+  padding: var(--sp-64) 0;
+}
+
+.form_error {
+  color: #b3261e;
+}
+
+@media (max-width: 767px) {
+  .cta-wrap_title {
+    grid-column: 1 / span 2;
+  }
+  .form_item {
+    padding: var(--sp-48) 0;
+  }
+  .input-num {
+    display: none;
+  }
+  .input-label,
+  .input-wrap {
+    grid-column: 1 / span 2;
+  }
+  .input-label {
+    padding-top: 0;
+    margin-bottom: var(--sp-8);
+  }
+  .input {
+    height: var(--sp-48);
+    margin-bottom: 0;
+    font-size: var(--sp-32);
+    line-height: 1;
+  }
+  .input-area {
+    min-height: var(--sp-160);
+    padding-top: 0;
+  }
+  .select-label {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: var(--sp-32);
+    line-height: 1;
+  }
+  .submit-row {
+    margin-top: 0;
+  }
+  .form_re-captcha {
+    grid-column: 1 / span 2;
+    height: 86px;
+  }
+  .btn-submit-wrap {
+    flex-direction: column;
+    grid-column: 1 / span 2;
+    gap: var(--sp-48);
+  }
+  .btn-submit-wrap_legal-wrap {
+    order: -1;
+    width: 80%;
+  }
+  .submit-btn {
+    height: var(--sp-48);
+    padding: var(--sp-16) var(--sp-32);
+  }
+}
+
+/* ==================================================================
+   Footer
+   ================================================================== */
+/* A full-viewport panel with the contact block and the bottom bar pushed
+   to the foot of it, over a bleed image and two scrims. */
+.footer-wrap {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: stretch;
+  height: 100vh;
+}
+
+.footer-wrap_img-wrap {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  height: 100%;
+  margin-right: calc(var(--gutter) * -1);
+  margin-left: calc(var(--gutter) * -1);
+}
+
+.footer-wrap_img-wrap .img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.footer-wrap .grad-overlay-t {
+  z-index: -1;
+  right: calc(var(--gutter) * -1);
+  left: calc(var(--gutter) * -1);
+  height: 23.33vw;
+  background-image: linear-gradient(180deg, var(--base-0--100), transparent);
+}
+
+.footer-wrap .grad-overlay-b {
+  z-index: -1;
+  right: calc(var(--gutter) * -1);
+  left: calc(var(--gutter) * -1);
+  height: 100%;
+  background-image: linear-gradient(transparent, var(--scrim-80));
+}
+
+.footer-wrap_contact {
+  grid-column: 5 / span 4;
+}
+
+.footer-wrap_contact_item {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-start;
+  margin-bottom: var(--sp-32);
+}
+
+.footer-wrap_contact_item_title {
+  width: 50%;
+}
+
+.footer-wrap_contact_item_content {
+  width: 25%;
+}
+
+.footer-wrap_contact_item_btn {
+  position: absolute;
+  inset: 0 0 auto auto;
+}
+
+.footer-wrap_bottom-bar {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-24);
+  width: 100%;
+  height: 4.44vw;
+  padding: 1.67vw var(--gutter);
+  background-color: var(--base-0--100);
+  color: var(--base-0--50);
+}
+
+.footer-wrap_bottom-bar_left {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.11vw;
+  width: 50%;
+}
+
+.footer-wrap_bottom-bar_btn {
+  position: absolute;
+  top: 1.11vw;
+  right: 1.11vw;
+  bottom: 1.11vw;
+}
+
+@media (max-width: 767px) {
+  .footer-wrap {
+    height: auto;
+  }
+  .footer-wrap_img-wrap,
+  .footer-wrap .grad-overlay-t,
+  .footer-wrap .grad-overlay-b {
+    margin-right: calc(var(--gutter) * -1);
+    margin-left: calc(var(--gutter) * -1);
+  }
+  .footer-wrap .grad-overlay-t {
+    height: 59.81vw;
+  }
+  .footer-wrap_content {
+    padding-top: var(--sp-96);
+  }
+  .footer-wrap_contact {
+    grid-column: 1 / span 2;
+  }
+  .footer-wrap_contact_item {
+    flex-wrap: wrap;
+  }
+  .footer-wrap_contact_item_btn {
+    position: relative;
+    left: 50%;
+    margin-top: var(--sp-48);
+  }
+  .footer-wrap_bottom-bar {
+    flex-flow: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: auto;
+    padding: var(--sp-48) var(--sp-64);
+  }
+  .footer-wrap_bottom-bar_left {
+    gap: var(--sp-32);
+    width: 100%;
+  }
+  .footer-wrap_bottom-bar_btn {
+    top: var(--sp-48);
+    right: var(--sp-32);
+    bottom: var(--sp-48);
+  }
+}

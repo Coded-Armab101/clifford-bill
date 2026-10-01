@@ -1,0 +1,113 @@
+/* ------------------------------------------------------------------
+   Design tokens — Clifford Bill
+   Ported 1:1 from the reference stylesheet, which is entirely vw-based
+   (body { font-size: 1vw }) with exactly one real breakpoint at 767px.
+   Spacing coefficients below are the original em values, resolved to vw
+   so nesting can never compound them.
+   ------------------------------------------------------------------ */
+
+:root {
+  /* --- colour ramps (original --<palette>-<step>--<alpha> scheme) --- */
+  --base-0--100: #e9e4e0; /* bone      — page background, dark-surface text */
+  --base-0--50: #e9e4e080; /* bone @50% — body copy over imagery            */
+  --base-0--20: #e9e4e033; /* bone @20% — hairlines on dark panels          */
+  --base-1000--100: #38332f; /* espresso — primary text, inverted surfaces   */
+  --base-1000--40: #38332f66; /* espresso @40% — secondary text             */
+  --base-1000--15: #38332f26; /* espresso @15% — dimmed text, borders       */
+  --base-1000--10: #38332f1a; /* espresso @10% — the house hairline         */
+  --brand-500--100: #6c7d35; /* olive     — the single accent colour         */
+  --live: #16ac27; /* the only saturated system colour (status dot)  */
+  --white: #fff;
+  --black: #000;
+
+  /* --- scrims --- */
+  --scrim-20: #0003;
+  --scrim-40: #0006;
+  --scrim-60: #0009;
+  --scrim-80: #000c;
+
+  /* --- typography: display weight 700 only, as in the original --- */
+  /* The em basis. 1vw at every breakpoint, exactly as the original, so that
+     em coefficients ported from the reference resolve to the same pixels. */
+  --em: 1vw;
+
+  /* The original renders everything in one family (NaN Holo) and drops to
+     plain Inter only for the `+` glyph in the development credit. Keep both
+     halves: --font-display/--font-body substitute the single family, while
+     --font-alt stays real Inter so .font-inter keeps its own metrics. */
+  --font-display: 'Inter Tight', 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Inter Tight', 'Inter', -apple-system, 'Segoe UI', sans-serif;
+  --font-alt: 'Inter', -apple-system, 'Segoe UI', sans-serif;
+
+  --h1-size: 13.33vw;
+  --h1-track: -0.077em;
+  --h1-lh: 75%;
+
+  --h1n-size: 10vw;
+  --h2-size: 5vw;
+  --h2-lh: 88.88%;
+  --h2-track: -0.072em;
+
+  --h3-size: 1.67vw;
+  --h3-lh: 100%;
+  --h3-track: -0.04em;
+
+  --p1-size: 0.99vw;
+  --p1-lh: 112.045%;
+  --p1-track: -0.04em;
+
+  --l1a-size: 3.18vw;
+  --l1a-lh: 105%;
+
+  /* --- spacing scale (original 0.5556em doubling rhythm) --- */
+  --sp-4: 0.28vw;
+  --sp-8: 0.56vw;
+  --sp-16: 1.11vw;
+  --sp-24: 1.67vw;
+  --sp-32: 2.22vw;
+  --sp-48: 3.33vw;
+  --sp-64: 4.44vw;
+  --sp-96: 6.67vw;
+  --sp-128: 8.89vw;
+  --sp-176: 12.22vw;
+
+  --gutter: 2.22vw;
+  --header-h: 6.67vw;
+  --bar-h: 4.44vw;
+
+  /* --- motion: the house curve --- */
+  --ease-house: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-pop: cubic-bezier(0.165, 0.84, 0.44, 1);
+  --ease-tab: cubic-bezier(0.19, 1, 0.22, 1);
+  --dur: 0.5s;
+  --dur-fast: 0.4s;
+
+  --z-header: 99;
+  --z-modal: 999;
+}
+
+@media (max-width: 767px) {
+  :root {
+    --h1-size: 18.69vw;
+    --h1n-size: 18.69vw;
+    --h2-size: 9.35vw;
+    --h3-size: 5.61vw;
+    --p1-size: 3.34vw;
+    --l1a-size: 10.6822vw;
+
+    --sp-4: 0.93vw;
+    --sp-8: 1.87vw;
+    --sp-16: 3.74vw;
+    --sp-24: 5.61vw;
+    --sp-32: 5.61vw;
+    --sp-48: 7.48vw;
+    --sp-64: 11.21vw;
+    --sp-96: 14.95vw;
+    --sp-128: 22.43vw;
+    --sp-176: 33.64vw;
+
+    --gutter: 3.79vw;
+    --header-h: 14.95vw;
+    --bar-h: 14.95vw;
+  }
+}

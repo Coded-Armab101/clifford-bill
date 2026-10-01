@@ -1,0 +1,367 @@
+/* ------------------------------------------------------------------
+   Header, mobile menu, gradients, misc chrome
+   ------------------------------------------------------------------ */
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-header);
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  width: 100%;
+  height: var(--header-h);
+  background-color: var(--base-0--100);
+  border-bottom: 1px solid var(--base-1000--15);
+}
+
+/* the reference pads only the inner edge of each column, so neither
+   side carries padding at the viewport boundary */
+.header_left {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--sp-24);
+  padding: var(--sp-16) 0 var(--sp-16) var(--gutter);
+}
+
+.header_right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--sp-32);
+  padding: var(--sp-16) var(--gutter) var(--sp-16) 0;
+}
+
+.header_left_phone,
+.header_left_mail,
+.header_right_location {
+  margin-top: var(--sp-8);
+}
+
+.header_logo-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-16) calc(var(--gutter) * 1.25);
+  border-left: 1px solid var(--base-1000--15);
+  border-right: 1px solid var(--base-1000--15);
+}
+
+.logo {
+  width: 7.64vw;
+  height: 5.56vw;
+}
+
+.link_label {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.link_label > * {
+  white-space: nowrap;
+  transition: transform var(--dur) var(--ease-house);
+}
+
+/* the duplicate waits one line below the fold so the hover is a roll */
+.link_label > * + * {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  white-space: nowrap;
+}
+
+a:hover > .link_label > *,
+.link_label:hover > * {
+  transform: translateY(-100%);
+}
+
+/* --- burger ---------------------------------------------------------- */
+.header_burger {
+  display: none;
+  flex-direction: column;
+  gap: var(--sp-8);
+  width: var(--sp-32);
+  padding: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+.header_burger span {
+  display: block;
+  width: 100%;
+  height: 1px;
+  background: var(--base-1000--100);
+  transition: transform var(--dur) var(--ease-house);
+}
+
+.header_burger.is-open span:first-child {
+  transform: translateY(calc(var(--sp-8) / 2 + 0.5px)) rotate(45deg);
+}
+
+.header_burger.is-open span:last-child {
+  transform: translateY(calc(var(--sp-8) / -2 - 0.5px)) rotate(-45deg);
+}
+
+/* --- mobile menu ------------------------------------------------------ */
+.menu {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-header) - 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: calc(var(--header-h) + var(--sp-32)) var(--gutter) var(--sp-48);
+  background-color: var(--base-0--100);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-2%);
+  transition:
+    opacity var(--dur) var(--ease-house),
+    transform var(--dur) var(--ease-house),
+    visibility 0s linear var(--dur);
+}
+
+.menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  transition-delay: 0s;
+}
+
+.menu_link {
+  display: flex;
+  align-items: baseline;
+  gap: var(--sp-16);
+  padding: var(--sp-16) 0;
+  border-bottom: 1px solid var(--base-1000--10);
+  opacity: 0;
+  /* explicit, not em: the reference has no mobile menu of its own, so this
+     offset is ours and must not drift when the body em basis changes */
+  transform: translateY(calc(var(--p1-size) * 0.5));
+  transition:
+    opacity var(--dur) var(--ease-house),
+    transform var(--dur) var(--ease-house);
+}
+
+.menu.is-open .menu_link {
+  opacity: 1;
+  transform: none;
+}
+
+.menu_foot {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-8);
+}
+
+@media (max-width: 767px) {
+  .header_burger {
+    display: flex;
+    /* keep a comfortable tap target — the desktop 2.22vw is ~22px here */
+    width: var(--sp-64);
+    padding: var(--sp-8) 0;
+  }
+  /* the left column and the location line are dropped by .desk-only,
+     leaving the logo box and the action pair to share the bar */
+  .logo {
+    width: 17.76vw;
+    height: 13.09vw;
+  }
+  /* the reference declares `border: 1px #000` here, which is invalid and
+     so drops entirely — the logo box is unframed on mobile */
+  .header_logo-wrap {
+    border: 0;
+    padding: var(--sp-32) var(--sp-16);
+  }
+  .header_right {
+    gap: var(--sp-32);
+    padding: var(--sp-16) var(--sp-16) var(--sp-16) 0;
+  }
+}
+
+/* --- image scrims ----------------------------------------------------- */
+.grad-overlay-t,
+.grad-overlay-b,
+.video_overlay-grad,
+.img-overlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.grad-overlay-t {
+  top: 0;
+  height: 23.33vw;
+  background-image: linear-gradient(var(--scrim-40), transparent);
+}
+
+.grad-overlay-b {
+  bottom: 0;
+  height: 23.33vw;
+  background-image: linear-gradient(transparent, var(--scrim-40));
+}
+
+.img-overlay {
+  inset: 0;
+  background-color: var(--scrim-20);
+}
+
+.video_overlay-grad {
+  inset: 0;
+  z-index: -1;
+  background-image: linear-gradient(180deg, transparent, var(--scrim-20));
+}
+
+@media (max-width: 767px) {
+  .grad-overlay-t,
+  .grad-overlay-b,
+  .video_overlay-grad {
+    height: 67.29vw;
+  }
+}
+
+/* --- commencing status bar -------------------------------------------- */
+.commencing {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: var(--bar-h);
+  background-color: var(--base-1000--100);
+  color: var(--base-0--100);
+}
+
+.commencing.on-img {
+  background-color: var(--base-0--100);
+  color: var(--base-1000--100);
+}
+
+.commencing_left {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  width: 50%;
+  height: 100%;
+  padding: var(--sp-8) var(--sp-16);
+}
+
+.commencing_label {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+}
+
+.commencing_right {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-start;
+  width: 50%;
+  height: 100%;
+  padding: 0.416667em var(--sp-16) 0.416667em var(--sp-8);
+  border-left: 1px solid var(--base-0--20);
+}
+
+.commencing_right.on-img {
+  border-left-color: var(--base-1000--10);
+}
+
+.commencing_right_wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-8);
+}
+
+.indicator {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: var(--sp-16);
+  height: var(--sp-16);
+  transform: translateY(-2px);
+}
+
+.indicator_dot {
+  position: absolute;
+  width: var(--sp-8);
+  height: var(--sp-8);
+  background-color: var(--live);
+  border-radius: 50%;
+}
+
+.indicator_puls {
+  position: absolute;
+  width: var(--sp-16);
+  height: var(--sp-16);
+  background-color: var(--live);
+  border-radius: 50%;
+  opacity: 0.1;
+  animation: pulse 2.4s var(--ease-house) infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.4);
+    opacity: 0.25;
+  }
+  70%,
+  100% {
+    transform: scale(1);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .commencing_left {
+    padding: var(--sp-24) var(--sp-32);
+  }
+  .commencing_label {
+    gap: var(--sp-16);
+  }
+  .indicator {
+    width: var(--sp-32);
+    height: var(--sp-32);
+  }
+  .indicator_dot {
+    width: var(--sp-16);
+    height: var(--sp-16);
+  }
+  .indicator_puls {
+    width: var(--sp-32);
+    height: var(--sp-32);
+  }
+  .commencing_right {
+    padding: 0 var(--sp-32) var(--sp-16) var(--sp-24);
+  }
+  .commencing_right_wrap {
+    gap: var(--sp-16);
+  }
+}
+
+/* --- drag affordance --------------------------------------------------- */
+.drag-wrap {
+  position: fixed;
+  left: 50%;
+  bottom: var(--sp-32);
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.drag-label_wrap {
+  padding: var(--sp-8) var(--sp-16);
+  background-color: rgb(0 0 0 / 40%);
+  border-radius: 999px;
+}

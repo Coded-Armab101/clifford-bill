@@ -1,0 +1,319 @@
+/* ------------------------------------------------------------------
+   Base + typography
+   ------------------------------------------------------------------ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+body {
+  margin: 0;
+  background-color: var(--base-0--100);
+  color: var(--base-1000--100);
+  font-family: var(--font-body);
+  /* The original pins body to 1vw at every breakpoint and scales the type
+     classes with em (`.p1` is .99em / 3.34em), so every `em` coefficient in
+     the reference resolves against 1vw. Keep that basis: it is what makes
+     literal em values comparable. */
+  font-size: var(--em);
+  font-weight: 400;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body.no-scroll {
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote {
+  margin: 0;
+}
+
+img,
+video,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+::selection {
+  color: var(--base-0--100);
+  background: var(--brand-500--100);
+}
+
+/* --- scrollbar, as specified in the reference --- */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+::-webkit-scrollbar-button {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--base-0--100);
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(56 51 47 / 20%);
+  border: 3px solid var(--base-0--100);
+  border-radius: 12px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(56 51 47 / 30%);
+}
+::-webkit-scrollbar-thumb:active {
+  background: rgb(56 51 47 / 30%);
+}
+
+/* --- display type --- */
+.h1,
+.h1-n,
+.h2,
+.h3,
+.p1,
+.l1-a {
+  margin: 0;
+  font-family: var(--font-display);
+}
+
+.h1 {
+  font-size: var(--h1-size);
+  font-weight: 700;
+  line-height: var(--h1-lh);
+  letter-spacing: var(--h1-track);
+}
+
+.h1-n {
+  font-size: var(--h1n-size);
+  font-weight: 700;
+  line-height: var(--h1-lh);
+  letter-spacing: -0.072em;
+}
+
+.h2 {
+  font-size: var(--h2-size);
+  font-weight: 700;
+  line-height: var(--h2-lh);
+  letter-spacing: var(--h2-track);
+}
+
+.h3 {
+  font-size: var(--h3-size);
+  font-weight: 700;
+  line-height: var(--h3-lh);
+  letter-spacing: var(--h3-track);
+}
+
+.p1 {
+  font-size: var(--p1-size);
+  font-weight: 400;
+  line-height: var(--p1-lh);
+  letter-spacing: var(--p1-track);
+}
+
+.l1-a {
+  font-size: var(--l1a-size);
+  font-weight: 400;
+  line-height: var(--l1a-lh);
+  letter-spacing: var(--p1-track);
+  text-transform: uppercase;
+}
+
+.h1.display-inline,
+.h1-n.display-inline {
+  display: inline;
+  vertical-align: baseline;
+}
+
+/* the ® sits low and small, aligned to the headline baseline */
+.r-symbol {
+  vertical-align: bottom;
+  padding-left: 0.15em;
+  font-size: 5vw;
+}
+
+.h1-n.r-symbol {
+  font-size: 4vw;
+}
+
+@media (max-width: 767px) {
+  .r-symbol {
+    font-size: 13vw;
+  }
+  .h1-n.r-symbol {
+    font-size: 8vw;
+  }
+}
+
+/* display headings burn into the imagery behind them */
+.mode-color-b {
+  mix-blend-mode: color-burn;
+}
+
+.mode-diff {
+  mix-blend-mode: difference;
+}
+
+/* --- colour utilities --- */
+.text-black {
+  color: var(--base-1000--100);
+}
+.text-white {
+  color: var(--white);
+}
+.text-grey-15 {
+  color: var(--base-1000--15);
+}
+.text-grey-40 {
+  color: var(--base-1000--40);
+}
+.text-grey-50--on-img {
+  color: var(--base-0--50);
+}
+.text-bold {
+  font-weight: 700;
+}
+.text-relative {
+  position: relative;
+}
+.text-center {
+  text-align: center;
+}
+.text-inline {
+  align-self: baseline;
+}
+.not-wrap {
+  white-space: nowrap;
+}
+.text-link {
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+.opacity-40 {
+  opacity: 0.4;
+}
+
+/* --- spacing utilities --- */
+.mb-4 {
+  margin-bottom: var(--sp-4);
+}
+.mb-8 {
+  margin-bottom: var(--sp-8);
+}
+.mb-16 {
+  margin-bottom: var(--sp-16);
+}
+.mb-24 {
+  margin-bottom: var(--sp-24);
+}
+.mb-32 {
+  margin-bottom: var(--sp-32);
+}
+.mb-48 {
+  margin-bottom: var(--sp-48);
+}
+.mb-64 {
+  margin-bottom: var(--sp-64);
+}
+.mb-96 {
+  margin-bottom: var(--sp-96);
+}
+.mb-128 {
+  margin-bottom: var(--sp-128);
+}
+.mb-176 {
+  margin-bottom: var(--sp-176);
+}
+.pt-32 {
+  padding-top: var(--sp-32);
+}
+.pt-128 {
+  padding-top: var(--sp-128);
+}
+.pt-176 {
+  padding-top: var(--sp-176);
+}
+.pb-32 {
+  padding-bottom: var(--sp-32);
+}
+.mt-20vh {
+  margin-top: var(--sp-32);
+}
+
+/* --- responsive visibility -------------------------------------------
+   The reference has exactly one breakpoint (767px) and no tablet
+   treatment, so these are the only two states. `!important` is
+   deliberate: a visibility utility has to win regardless of what
+   display value the element's own component rule sets.
+   ------------------------------------------------------------------- */
+@media (max-width: 767px) {
+  .desk-only {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .mob-only {
+    display: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}

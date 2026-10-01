@@ -1,0 +1,213 @@
+/* ------------------------------------------------------------------
+   Layout: container, 8-col grid, the house hairline, buttons
+   ------------------------------------------------------------------ */
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* Eight equal columns, zero gap, as in the reference. Two on mobile.
+   Column spans throughout the app are authored against these eight. */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: auto;
+  grid-auto-flow: row;
+  align-content: start;
+  place-items: stretch stretch;
+  column-gap: 0;
+  row-gap: 0;
+}
+
+@media (max-width: 767px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* The signature 1px rule. Full-bleed variants cancel the container gutter. */
+.line-h {
+  width: 100%;
+  height: 1px;
+  background-color: var(--base-1000--10);
+}
+
+.line-h.bleed {
+  width: auto;
+  margin-left: calc(var(--gutter) * -1);
+  margin-right: calc(var(--gutter) * -1);
+}
+
+.bleed-x {
+  margin-left: calc(var(--gutter) * -1);
+  margin-right: calc(var(--gutter) * -1);
+}
+
+.clip {
+  overflow: hidden;
+}
+
+.sections {
+  overflow: clip;
+}
+
+/* --- buttons ---------------------------------------------------------
+   Square corners, no radius anywhere. On hover the horizontal padding
+   expands and a background wipes in from a layer behind the label.
+   ------------------------------------------------------------------- */
+.btn,
+.btn-ico,
+.btn-ico-nest,
+.btn-nest {
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  transition: all var(--dur) var(--ease-house);
+}
+
+/* inline-block, as in the reference: the button sits on the text baseline,
+   so its wrapper gains the same descender gap the original has */
+.btn,
+.btn-nest {
+  display: inline-block;
+  height: var(--sp-32);
+  padding: var(--sp-8) calc(var(--sp-24) / 2);
+}
+
+.btn:hover,
+.btn-nest:hover {
+  padding-left: var(--sp-16);
+  padding-right: var(--sp-16);
+}
+
+.btn-ico,
+.btn-ico-nest {
+  display: inline-flex;
+  align-items: center;
+  width: var(--sp-32);
+  height: var(--sp-32);
+  padding: calc(var(--sp-8) * 1.5);
+}
+
+.btn_label {
+  position: relative;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.btn_label > * {
+  white-space: nowrap;
+  transition: transform var(--dur) var(--ease-house);
+}
+
+.btn_hover-bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+}
+
+/* two stacked labels — the resting line and the hover-revealed duplicate.
+   The duplicate sits exactly one line below the fold rather than on top of
+   the resting line, so hovering rolls the pair upward instead of fading
+   between them. Distance is 100% of the line's own box, which lands on one
+   line because buttons and links are single-line by construction. */
+.btn_label > * + * {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  white-space: nowrap;
+}
+
+.btn:hover .btn_label > * {
+  transform: translateY(-100%);
+}
+
+.btn-icon_ico {
+  width: var(--sp-16);
+  height: var(--sp-16);
+  position: relative;
+  z-index: 1;
+}
+
+.btn-icon_ico-24 {
+  width: var(--sp-24);
+  height: var(--sp-24);
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 767px) {
+  .btn,
+  .btn-nest {
+    height: var(--sp-48);
+    padding: var(--sp-8) 2.8vw;
+  }
+  .btn:hover,
+  .btn-nest:hover {
+    padding-left: var(--sp-16);
+    padding-right: var(--sp-16);
+  }
+  .btn-ico,
+  .btn-ico-nest {
+    width: var(--sp-48);
+    height: var(--sp-48);
+    padding: var(--sp-16);
+  }
+  .btn-icon_ico {
+    width: var(--sp-32);
+    height: var(--sp-32);
+  }
+  .btn-icon_ico-24 {
+    width: var(--sp-48);
+    height: var(--sp-48);
+  }
+}
+
+/* --- button variants --- */
+.prim-on-white {
+  background-color: var(--brand-500--100);
+  color: var(--base-0--100);
+}
+.prim-on-white > .btn_hover-bg {
+  background-color: var(--base-1000--100);
+}
+
+.sec-on-white {
+  outline: 1px solid var(--base-1000--100);
+  outline-offset: -1px;
+  color: var(--base-1000--100);
+}
+.sec-on-white > .btn_hover-bg {
+  background-color: var(--base-1000--100);
+}
+.sec-on-white:hover {
+  color: var(--base-0--100);
+}
+
+.sec-on-img {
+  outline: 1px solid var(--base-0--100);
+  outline-offset: -1px;
+  color: var(--white);
+}
+.sec-on-img > .btn_hover-bg {
+  background-color: var(--base-0--100);
+}
+.sec-on-img:hover {
+  color: var(--base-1000--100);
+}
+
+.prim-on-img {
+  background-color: var(--base-0--100);
+  color: var(--base-1000--100);
+}
+.prim-on-img > .btn_hover-bg {
+  background-color: var(--brand-500--100);
+}
+.prim-on-img:hover {
+  color: var(--base-0--100);
+}
