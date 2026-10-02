@@ -61,7 +61,7 @@ export default function Footer() {
           <footer className="footer-wrap_bottom-bar mb-32">
             <div className="footer-wrap_bottom-bar_left">
               <div className="p1">
-                &copy; {year} All Right Reserved
+                <span className="font-inter">&copy;</span> {year} All Right Reserved
               </div>
             </div>
             <div className="footer-wrap_bottom-bar_left">

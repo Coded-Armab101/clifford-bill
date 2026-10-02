@@ -1639,13 +1639,17 @@
     padding-top: 0;
     margin-bottom: var(--sp-8);
   }
-  .input {
+  /* the textarea carries `.input` as well as `.input-area`, but the reference
+     types it standalone — the negative pull-up that closes the gap under a
+     single-line field belongs to those fields only */
+  .input:not(.input-area) {
     height: auto;
     margin-bottom: -3.74vw;
     font-size: 7.48vw;
   }
   .input-area {
     margin-top: 0;
+    margin-bottom: 0;
     font-size: 7.48vw;
   }
   .select-label {
@@ -1805,6 +1809,17 @@
     position: relative;
     left: 50%;
     margin-top: 5.61vw;
+  }
+  /* The reference breaks "South Australia 5253, / Australia" on desktop, but
+     in the narrower mobile column the two fit on one line and break earlier
+     instead. Pair the last two lines up here so the column keeps the three
+     lines the reference renders. */
+  .footer-wrap_contact_item_content .p1 > div:nth-last-child(2),
+  .footer-wrap_contact_item_content .p1 > div:last-child {
+    display: inline;
+  }
+  .footer-wrap_contact_item_content .p1 > div:nth-last-child(2)::after {
+    content: ' ';
   }
   .footer-wrap_bottom-bar {
     flex-flow: column;

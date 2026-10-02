@@ -89,8 +89,10 @@
 @media (max-width: 767px) {
   :root {
     --h1-size: 18.69vw;
+    --h1-lh: 80%;
     --h1n-size: 18.69vw;
     --h2-size: 9.35vw;
+    --h2-lh: 90%;
     --h3-size: 5.61vw;
     --p1-size: 3.34vw;
     --l1a-size: 10.6822vw;

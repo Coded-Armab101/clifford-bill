@@ -97,6 +97,20 @@ const check = (name, pass, detail = '') => {
   console.log(`${pass ? 'PASS' : 'FAIL'}  ${name}${detail ? `  (${detail})` : ''}`)
 }
 
+/* Poll an in-page expression until it is truthy. A background tab throttles
+   animation frames hard (~2 frames/sec measured), so a transition that would
+   take 0.5s in a real tab can take several seconds here. Any assertion that
+   waits out a CSS transition must poll rather than sleep a fixed amount,
+   otherwise it fails for reasons that have nothing to do with the site. */
+const waitFor = async (run, expression, timeout = 15000, interval = 250) => {
+  const deadline = Date.now() + timeout
+  for (;;) {
+    if (await run(expression)) return true
+    if (Date.now() >= deadline) return false
+    await sleep(interval)
+  }
+}
+
 /* ================================================================
    Desktop
    ================================================================ */
@@ -294,18 +308,21 @@ check('Mobile: pin map layer swapped for list', mob.pinLayer === 'none' && mob.p
 check('Mobile: about slider is not sticky', mob.aboutSticky === 'static')
 
 await run(`document.querySelector('.header_burger').click()`)
-await sleep(1000)
+const menuOpen = await waitFor(
+  run,
+  `(() => { const m = document.querySelector('.menu'); const cs = getComputedStyle(m);
+     return m.classList.contains('is-open') && cs.opacity === '1' && cs.visibility === 'visible'; })()`,
+)
 const menu = await run(`(() => {
   const m = document.querySelector('.menu');
   const cs = getComputedStyle(m);
   return { open: m.classList.contains('is-open'), opacity: cs.opacity, vis: cs.visibility,
            links: m.querySelectorAll('.menu_link').length, locked: document.body.classList.contains('no-scroll') };
 })()`)
-check('Mobile: menu opens', menu.open && menu.opacity === '1' && menu.vis === 'visible', `${menu.links} links`)
+check('Mobile: menu opens', menuOpen, `${menu.links} links`)
 check('Mobile: menu locks scroll', menu.locked)
 await run(`document.querySelector('.menu_link').click()`)
-await sleep(900)
-const closed = await run(`!document.querySelector('.menu').classList.contains('is-open')`)
+const closed = await waitFor(run, `!document.querySelector('.menu').classList.contains('is-open')`)
 check('Mobile: menu closes on nav', closed)
 
 ws.close()
