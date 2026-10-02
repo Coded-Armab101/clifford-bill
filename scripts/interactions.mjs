@@ -55,6 +55,12 @@ async function connect(width, height) {
     width, height, deviceScaleFactor: 1, mobile: width < 768,
   })
   await send(ws, 'Page.navigate', { url })
+  // A background tab has its requestAnimationFrame throttled, and Lenis drives
+  // every scroll from rAF — so `lenis.scrollTo` would resolve without ever
+  // applying and the scroll-driven assertions would fail for no real reason.
+  // Claim the page as active and focused so rAF actually runs.
+  await send(ws, 'Emulation.setFocusEmulationEnabled', { enabled: true }).catch(() => {})
+  await send(ws, 'Page.setWebLifecycleState', { state: 'active' }).catch(() => {})
   return ws
 }
 

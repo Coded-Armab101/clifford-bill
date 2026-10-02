@@ -19,7 +19,7 @@ export const brand = {
   phoneHref: 'tel:+611300283772',
   mapsUrl:
     'https://www.google.com/maps/place/Gifford+Hill+SA+5253,+Australia/@-35.1696937,139.2069145,14z/data=!4m6!3m5!1s0x6ab7749bd9ce9dc1:0x5033654628eff30!8m2!3d-35.1668748!4d139.2230655!16s%2Fg%2F11fy_qmjz_?entry=ttu',
-  address: ['Clifford Bill', 'South Australia 5253, Australia'],
+  address: ['Clifford Bill', 'South Australia 5253,', 'Australia'],
   street: 'Usher Road, Clifford Bill, South Australia, 5253',
   development: ['Bill & Co', 'Property Group'],
   commencement: { quarter: 'q4', year: '2025' },

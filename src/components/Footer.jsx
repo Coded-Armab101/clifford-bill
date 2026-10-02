@@ -13,6 +13,7 @@ export default function Footer() {
       <div className="container">
         <div className="footer-wrap">
           <div className="grad-overlay-t" />
+          <div className="grad-overlay-t" />
           <div className="grad-overlay-b" />
           <div className="footer-wrap_img-wrap">
             <img
@@ -27,9 +28,6 @@ export default function Footer() {
             <div className="grid">
               <div className="footer-wrap_contact">
                 <div className="mb-64">
-                  <a href={brand.phoneHref} className="link-h2 w-inline-block">
-                    <div className="h2 text-white">{brand.phone}</div>
-                  </a>
                   <a href={`mailto:${brand.email}`} className="link-h2 w-inline-block">
                     <div className="h2 text-white">{brand.email}</div>
                   </a>
@@ -45,6 +43,7 @@ export default function Footer() {
                       ))}
                     </div>
                   </div>
+                  <div className="footer-wrap_contact_break" />
                   <div className="footer-wrap_contact_item_btn">
                     <Button
                       href={brand.mapsUrl}
@@ -62,7 +61,7 @@ export default function Footer() {
           <footer className="footer-wrap_bottom-bar mb-32">
             <div className="footer-wrap_bottom-bar_left">
               <div className="p1">
-                &copy; {year} All Rights Reserved
+                &copy; {year} All Right Reserved
               </div>
             </div>
             <div className="footer-wrap_bottom-bar_left">

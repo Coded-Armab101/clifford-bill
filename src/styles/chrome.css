@@ -62,6 +62,12 @@
   white-space: nowrap;
 }
 
+/* the reference wraps these anchors as Webflow inline-blocks, so they sit
+   side by side and shrink to their own text */
+.link-h2 {
+  display: inline-block;
+}
+
 .link_label > * {
   white-space: nowrap;
   transition: transform var(--dur) var(--ease-house);
